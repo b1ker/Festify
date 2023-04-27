@@ -1,4 +1,6 @@
-﻿namespace Festify.Promotion.UnitTest;
+﻿using Festify.Promotion.Sales;
+
+namespace Festify.Promotion.UnitTest;
 
 internal class FakePaymentProcessor : IPaymentProcessor
 {
