@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Festify.Promotion.Sales;
 
 namespace Festify.Promotion.Data
 {
@@ -31,7 +32,9 @@ namespace Festify.Promotion.Data
         public DbSet<VenueTimeZone> VenueTimeZone { get; set; }
         public DbSet<Show> Show { get; set; }
         public DbSet<Content> Content { get; set; }
-
+        
+        public DbSet<Payment> Payment { get; set; }
+        
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Act>()
@@ -66,6 +69,9 @@ namespace Festify.Promotion.Data
             modelBuilder.Entity<Content>()
                 .Property(content => content.Binary)
                 .IsRequired();
+            
+            modelBuilder.Entity<Payment>()
+                .HasKey(payment => new { payment.PaymentGuid });
         }
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
@@ -143,6 +149,11 @@ namespace Festify.Promotion.Data
             }
 
             return show;
+        }
+        
+        public async Task InsertPayment(Payment payment)
+        {
+            await base.AddAsync(payment);
         }
     }
 }
